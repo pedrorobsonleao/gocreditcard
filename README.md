@@ -55,6 +55,6 @@ func main() {
 
 ```
 
-[1]: https://go.dev/ (Build simple, secure, scalable systems with Go)
-[2]: https://github.com/pedrorobsonleao/check-credit-card (a javascript creditcard number validator)
-[3]: https://www.bincodes.com/ (BIN Codes Credit Card & Debit Card Number Tools)
+[1]:https://go.dev/ (Build simple, secure, scalable systems with Go)
+[2]:https://github.com/pedrorobsonleao/check-credit-card (a javascript creditcard number validator)
+[3]:https://www.bincodes.com/ (BIN Codes Credit Card & Debit Card Number Tools)
