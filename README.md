@@ -35,6 +35,26 @@ ok      github.com/pedrorobsonleao/gocreditcard  1.334s
 
 ## how to use
 
+`go get github.com/pedrorobsonleao/gocreditcard`
+
+```golang
+func main() {
+	check := gocreditcard.Check("3841784397026343307")
+	if check {
+		fmt.Println("OK")
+	}
+
+	brand := gocreditcard.Brand("3841784397026343307")
+	if brand == "hipercard" {
+		fmt.Println("OK")
+	}
+
+	check, brand = gocreditcard.Validate("3841784397026343307")
+	fmt.Println(check, brand)
+}
+
+```
+
 [1]: https://go.dev/ (Build simple, secure, scalable systems with Go)
 [2]: https://github.com/pedrorobsonleao/check-credit-card (a javascript creditcard number validator)
 [3]: https://www.bincodes.com/ (BIN Codes Credit Card & Debit Card Number Tools)
