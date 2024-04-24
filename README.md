@@ -1,6 +1,6 @@
 # GoCreditCard
 
-The [GoLang](1) version to [check-credit-card](2) the code has with a base the specification [BIN (The Bank Number Identification)](3).
+The [GoLang](https://go.dev/ (Build simple, secure, scalable systems with Go)) version to [check-credit-card](https://github.com/pedrorobsonleao/check-credit-card (a javascript creditcard number validator)) the code has with a base the specification [BIN (The Bank Number Identification)](https://www.bincodes.com/ (BIN Codes Credit Card & Debit Card Number Tools)).
 
 This implementation have support to then BINS:
 
@@ -30,7 +30,7 @@ $ go test -v
 === RUN   TestValidateCard
 --- PASS: TestValidateCard (0.69s)
 PASS
-ok      githb.com/pedrorobsonleao/gocreditcard  1.334s
+ok      github.com/pedrorobsonleao/gocreditcard  1.334s
 ```
 
 ## how to use
