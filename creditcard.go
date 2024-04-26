@@ -113,7 +113,7 @@ func luhn(cardNumber string) bool {
 }
 
 // CardNumber parser
-func Creditcard(cardnumber string) (c card, e error) {
+func Parse(cardnumber string) (c card, e error) {
 	match, err := regexp.MatchString("^[0-9]{14,19}$", cardnumber)
 
 	if match && err == nil {
