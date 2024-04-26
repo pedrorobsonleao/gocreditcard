@@ -45,7 +45,7 @@ ok      github.com/pedrorobsonleao/gocreditcard 2.331s
 
 ```golang
 func main() {
-	card, err := gocreditcard.Parse(s.cardnumber)
+	card, err := gocreditcard.Parse("6011777162346388")
 	if err != nil {
 		fmt.Println(card.number, card.flag)
 	}
