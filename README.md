@@ -23,14 +23,20 @@ const (
 
 ```bash
 $ go test -v
-=== RUN   TestCheckCard
---- PASS: TestCheckCard (0.00s)
-=== RUN   TestBrandCard
---- PASS: TestBrandCard (0.62s)
-=== RUN   TestValidateCard
---- PASS: TestValidateCard (0.69s)
+=== RUN   TestCreditcard
+--- PASS: TestCreditcard (1.18s)
+=== RUN   TestCreditcardFlag
+--- PASS: TestCreditcardFlag (1.11s)
+=== RUN   TestCreditcardInvalidValue
+--- PASS: TestCreditcardInvalidValue (0.00s)
+=== RUN   TestCreditcardSmallValue
+--- PASS: TestCreditcardSmallValue (0.00s)
+=== RUN   TestCreditcardLargeValue
+--- PASS: TestCreditcardLargeValue (0.00s)
+=== RUN   TestCreditcardInvalidCheckDigit
+--- PASS: TestCreditcardInvalidCheckDigit (0.00s)
 PASS
-ok      github.com/pedrorobsonleao/gocreditcard  1.334s
+ok      github.com/pedrorobsonleao/gocreditcard 2.331s
 ```
 
 ## how to use
@@ -39,18 +45,10 @@ ok      github.com/pedrorobsonleao/gocreditcard  1.334s
 
 ```golang
 func main() {
-	check := gocreditcard.Check("3841784397026343307")
-	if check {
-		fmt.Println("OK")
+	card, err := Creditcard(s.cardnumber)
+	if err != nil {
+		fmt.Println(card.number, card.flag)
 	}
-
-	brand := gocreditcard.Brand("3841784397026343307")
-	if brand == "hipercard" {
-		fmt.Println("OK")
-	}
-
-	check, brand = gocreditcard.Validate("3841784397026343307")
-	fmt.Println(check, brand)
 }
 
 ```

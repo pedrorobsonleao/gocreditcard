@@ -1,6 +1,8 @@
 package gocreditcard
 
 import (
+	"errors"
+	"fmt"
 	"regexp"
 )
 
@@ -20,7 +22,22 @@ const (
 	HIPERCARD
 )
 
-var Flags = [...]string{
+type card struct {
+	number string
+	flag   Flag
+}
+
+/*
+func (c card) getNumber() string {
+	return c.number
+}
+
+func (c card) getFlag() Flag {
+	return c.flag
+}
+*/
+
+var creditcardPatterns = [...]string{
 	"^(5067|509[0-9]|6277|6363|650[0-9]|651[67]|6550)[0-9]{12}$",
 	"^35\\d{14}$",
 	"^3[47][0-9]{13}$",
@@ -95,25 +112,31 @@ func luhn(cardNumber string) bool {
 	return flag
 }
 
-// Get Brand to CardNumber
-func Brand(cardNumber string) string {
-	for i := ELO; i <= HIPERCARD; i++ {
-		match, _ := regexp.MatchString(Flags[i], cardNumber)
-		if match {
-			return i.String()
+// CardNumber parser
+func Creditcard(cardnumber string) (c card, e error) {
+	match, err := regexp.MatchString("^[0-9]{14,19}$", cardnumber)
+
+	if match && err == nil {
+		if luhn(cardnumber) {
+			c.number = cardnumber
+
+			for i := ELO; i <= HIPERCARD; i++ {
+				match, _ := regexp.MatchString(creditcardPatterns[i], cardnumber)
+				if match {
+					c.flag = i
+
+					if c.flag.String() == "unknow" {
+						e = errors.New("unknow creditcard flag")
+					}
+				}
+			}
+
+		} else {
+			e = errors.New("invalid check digit")
 		}
+	} else {
+		e = fmt.Errorf("invalid parameter")
 	}
-	return "unknown"
-}
 
-// Check verification digit
-func Check(cardNumber string) bool {
-	return luhn(cardNumber)
-}
-
-// Check verification digit and get Brand
-func Validate(cardNumber string) (bool, string) {
-	check := Check(cardNumber)
-	brand := Brand(cardNumber)
-	return check, brand
+	return
 }

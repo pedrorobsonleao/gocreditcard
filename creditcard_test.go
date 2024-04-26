@@ -947,32 +947,65 @@ var (
 	}
 )
 
-func TestCheckCard(t *testing.T) {
+func TestCreditcard(t *testing.T) {
 	for _, s := range samples {
-		check := Check(s.cardnumber)
-
-		if !check {
-			t.Errorf(`%s check status is %v`, s.cardnumber, check)
+		_, err := Creditcard(s.cardnumber)
+		if err != nil {
+			t.Errorf("%s: %s", s.cardnumber, err.Error())
 		}
 	}
 }
 
-func TestBrandCard(t *testing.T) {
+func TestCreditcardFlag(t *testing.T) {
 	for _, s := range samples {
-		brand := Brand(s.cardnumber)
-
-		if brand != s.brand {
-			t.Errorf(`%s %s not is equal %s`, s.cardnumber, s.brand, brand)
+		card, err := Creditcard(s.cardnumber)
+		if err == nil && s.brand != card.flag.String() {
+			t.Errorf(`%s %s not is equal %s`, card.number, card.flag, s.brand)
 		}
 	}
 }
 
-func TestValidateCard(t *testing.T) {
-	for _, s := range samples {
-		check, brand := Validate(s.cardnumber)
+func TestCreditcardInvalidValue(t *testing.T) {
+	_, err := Creditcard("Invalid value here")
+	if err.Error() != "invalid parameter" {
+		t.Errorf("%s", err)
+	}
+}
 
-		if brand != s.brand || !check {
-			t.Errorf(`%s %s not is equal %s or status %v`, s.cardnumber, s.brand, brand, check)
+func TestCreditcardSmallValue(t *testing.T) {
+	samples := []string{
+		"1",
+		"12",
+		"123",
+		"12345",
+		"123456",
+		"1234567",
+		"12345678",
+		"123456789",
+		"1234567890",
+		"12345678901",
+		"123456789012",
+		"1234567890123",
+	}
+
+	for _, s := range samples {
+		_, err := Creditcard(s)
+		if err.Error() != "invalid parameter" {
+			t.Errorf("%s", err)
 		}
+	}
+}
+
+func TestCreditcardLargeValue(t *testing.T) {
+	_, err := Creditcard("12345678901234567890")
+	if err.Error() != "invalid parameter" {
+		t.Errorf("%s", err)
+	}
+}
+
+func TestCreditcardInvalidCheckDigit(t *testing.T) {
+	_, err := Creditcard("6011777162346387")
+	if err.Error() != "invalid check digit" {
+		t.Errorf("%s", err)
 	}
 }
