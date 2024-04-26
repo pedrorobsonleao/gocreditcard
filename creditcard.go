@@ -28,14 +28,13 @@ type Card struct {
 }
 
 /*
-func (c card) getNumber() string {
-	return c.number
-}
-
-func (c card) getFlag() Flag {
+	func (c card) getNumber() string {
+		return c.number
+	}
+*/
+func (c Card) Flag() Flag {
 	return c.flag
 }
-*/
 
 var creditcardPatterns = [...]string{
 	"^(5067|509[0-9]|6277|6363|650[0-9]|651[67]|6550)[0-9]{12}$",
