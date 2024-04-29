@@ -47,7 +47,7 @@ ok      github.com/pedrorobsonleao/gocreditcard 2.331s
 func main() {
 
 	number := "6011777162346388"
-	card, err := Parse(number)
+	card, err := gocreditcard.Parse(number)
 
 	if err != nil {
 		t.Errorf(`%s parse error [%s]`, number, err)
