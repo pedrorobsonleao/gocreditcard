@@ -24,10 +24,12 @@ const (
 
 type card string
 
+// return the creditcard number
 func (c card) Number() string {
 	return string(c)
 }
 
+// return the flag to creditcard
 func (c card) Flag() (f string, e error) {
 	for i := ELO; i <= HIPERCARD; i++ {
 		match, _ := regexp.MatchString(creditcardPatterns[i], c.Number())
