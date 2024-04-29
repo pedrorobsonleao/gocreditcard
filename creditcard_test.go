@@ -958,9 +958,20 @@ func TestCreditcard(t *testing.T) {
 
 func TestCreditcardFlag(t *testing.T) {
 	for _, s := range samples {
+
 		card, err := Parse(s.cardnumber)
-		if err == nil && s.brand != card.flag.String() {
-			t.Errorf(`%s %s not is equal %s`, card.number, card.flag, s.brand)
+
+		if err != nil {
+			t.Errorf(`%s parse error [%s]`, s.cardnumber, err)
+		} else {
+			flag, err := card.Flag()
+			if err != nil {
+				t.Errorf(`%s flag error [%s]`, s.cardnumber, err)
+			}
+
+			if s.brand != flag {
+				t.Errorf(`%s invalid flag [%s] [%s]`, card.Number(), flag, s.brand)
+			}
 		}
 	}
 }

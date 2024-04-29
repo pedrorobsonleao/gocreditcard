@@ -22,18 +22,24 @@ const (
 	HIPERCARD
 )
 
-type Card struct {
-	number string
-	flag   Flag
+type card string
+
+func (c card) Number() string {
+	return string(c)
 }
 
-/*
-	func (c card) getNumber() string {
-		return c.number
+func (c card) Flag() (f string, e error) {
+	for i := ELO; i <= HIPERCARD; i++ {
+		match, _ := regexp.MatchString(creditcardPatterns[i], c.Number())
+		if match {
+			f = i.String()
+
+			if f == "unknow" {
+				e = errors.New("unknow creditcard flag")
+			}
+		}
 	}
-*/
-func (c Card) Flag() Flag {
-	return c.flag
+	return
 }
 
 var creditcardPatterns = [...]string{
@@ -112,24 +118,12 @@ func luhn(cardNumber string) bool {
 }
 
 // CardNumber parser
-func Parse(cardnumber string) (c Card, e error) {
+func Parse(cardnumber string) (c card, e error) {
 	match, err := regexp.MatchString("^[0-9]{14,19}$", cardnumber)
 
 	if match && err == nil {
 		if luhn(cardnumber) {
-			c.number = cardnumber
-
-			for i := ELO; i <= HIPERCARD; i++ {
-				match, _ := regexp.MatchString(creditcardPatterns[i], cardnumber)
-				if match {
-					c.flag = i
-
-					if c.flag.String() == "unknow" {
-						e = errors.New("unknow creditcard flag")
-					}
-				}
-			}
-
+			c = card(cardnumber)
 		} else {
 			e = errors.New("invalid check digit")
 		}
