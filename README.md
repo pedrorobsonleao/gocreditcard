@@ -45,25 +45,20 @@ ok      github.com/pedrorobsonleao/gocreditcard 2.331s
 
 ```golang
 func main() {
-
 	number := "6011777162346388"
 	card, err := gocreditcard.Parse(number)
 
 	if err != nil {
-		t.Errorf(`%s parse error [%s]`, number, err)
+		fmt.Errorf(`%s parse error [%s]`, number, err)
 	} else {
 		flag, err := card.Flag()
 		if err != nil {
-			t.Errorf(`%s flag error [%s]`, number, err)
+			fmt.Errorf(`%s flag error [%s]`, number, err)
 		}
 
-		if s.brand != flag {
-			t.Errorf(`%s invalid flag [%s] [%s]`, card.Number(), flag, s.brand)
-		}
+		fmt.Println(card.Number(), flag)
 	}
-
 }
-
 ```
 
 [1]:https://go.dev/ (Build simple, secure, scalable systems with Go)
