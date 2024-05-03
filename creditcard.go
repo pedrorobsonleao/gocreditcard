@@ -24,12 +24,12 @@ const (
 
 type card string
 
-// return the creditcard number
+// Number return the creditcard number
 func (c card) Number() string {
 	return string(c)
 }
 
-// return the flag to creditcard
+// Flag return the flag to creditcard or error case unknow the flag of the cardnumber
 func (c card) Flag() (f string, e error) {
 	for i := ELO; i <= HIPERCARD; i++ {
 		match, _ := regexp.MatchString(creditcardPatterns[i], c.Number())
@@ -119,7 +119,7 @@ func luhn(cardNumber string) bool {
 	return flag
 }
 
-// CardNumber parser
+// Parse identify and parse the string cardnumber and return an card or error
 func Parse(cardnumber string) (c card, e error) {
 	match, err := regexp.MatchString("^[0-9]{14,19}$", cardnumber)
 
