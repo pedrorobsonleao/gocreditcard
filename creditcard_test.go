@@ -948,6 +948,7 @@ var (
 )
 
 func TestCreditcard(t *testing.T) {
+	t.Parallel()
 	for _, s := range samples {
 		_, err := Parse(s.cardnumber)
 		if err != nil {
@@ -957,6 +958,7 @@ func TestCreditcard(t *testing.T) {
 }
 
 func TestCreditcardFlag(t *testing.T) {
+	t.Parallel()
 	for _, s := range samples {
 
 		card, err := Parse(s.cardnumber)
@@ -977,6 +979,7 @@ func TestCreditcardFlag(t *testing.T) {
 }
 
 func TestCreditcardInvalidValue(t *testing.T) {
+	t.Parallel()
 	_, err := Parse("Invalid value here")
 	if err.Error() != "invalid parameter" {
 		t.Errorf("%s", err)
@@ -984,6 +987,7 @@ func TestCreditcardInvalidValue(t *testing.T) {
 }
 
 func TestCreditcardSmallValue(t *testing.T) {
+	t.Parallel()
 	samples := []string{
 		"1",
 		"12",
@@ -1008,6 +1012,7 @@ func TestCreditcardSmallValue(t *testing.T) {
 }
 
 func TestCreditcardLargeValue(t *testing.T) {
+	t.Parallel()
 	_, err := Parse("12345678901234567890")
 	if err.Error() != "invalid parameter" {
 		t.Errorf("%s", err)
@@ -1015,6 +1020,7 @@ func TestCreditcardLargeValue(t *testing.T) {
 }
 
 func TestCreditcardInvalidCheckDigit(t *testing.T) {
+	t.Parallel()
 	_, err := Parse("6011777162346387")
 	if err.Error() != "invalid check digit" {
 		t.Errorf("%s", err)
