@@ -22,15 +22,15 @@ const (
 	HIPERCARD
 )
 
-type card string
+type Card string
 
 // Number return the creditcard number
-func (c card) Number() string {
+func (c Card) Number() string {
 	return string(c)
 }
 
 // Flag return the flag to creditcard or error case unknow the flag of the cardnumber
-func (c card) Flag() (f string, e error) {
+func (c Card) Flag() (f string, e error) {
 	for i := ELO; i <= HIPERCARD; i++ {
 		match, _ := regexp.MatchString(creditcardPatterns[i], c.Number())
 		if match {
@@ -92,7 +92,7 @@ const zero rune = 48
 func luhn(cardNumber string) bool {
 	charAt := []rune(cardNumber)
 
-	var flag bool = false
+	var flag = false
 
 	oddorEven := len(cardNumber) & 1
 	var sum rune = 0
@@ -120,12 +120,12 @@ func luhn(cardNumber string) bool {
 }
 
 // Parse identify and parse the string cardnumber and return an card or error
-func Parse(cardnumber string) (c card, e error) {
+func Parse(cardnumber string) (c Card, e error) {
 	match, err := regexp.MatchString("^[0-9]{14,19}$", cardnumber)
 
 	if match && err == nil {
 		if luhn(cardnumber) {
-			c = card(cardnumber)
+			c = Card(cardnumber)
 		} else {
 			e = errors.New("invalid check digit")
 		}
